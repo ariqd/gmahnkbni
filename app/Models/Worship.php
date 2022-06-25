@@ -9,7 +9,11 @@ class Worship extends Model
 {
     use HasFactory;
 
-    protected $table = 'ibadah';
+    protected $fillable = [
+        'role_id',
+        'name',
+        'day',
+    ];
 
     public function role()
     {

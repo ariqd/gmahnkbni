@@ -80,7 +80,7 @@
 
     <main class="py-4">
 
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-12 mx-auto py-3">
                     <h3 class="text-center">GEREJA MASEHI ADVENT HARI KE-TUJUH <br> SIDANG BUKTI NUSA INDAH</h3>

@@ -3,7 +3,7 @@
         <div class="card-body">
             <div class="row align-items-baseline">
                 <div class="col-10">
-                    <h4>Ubah Jadwal Ibadah {{ $worship->nama }}</h4>
+                    <h4>Ubah Jadwal Ibadah {{ $worship->name }}</h4>
                 </div>
                 <div class="col-2">
                     <a href="{{ route('worships.index') }}" class="btn btn-block btn-secondary">

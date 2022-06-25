@@ -34,7 +34,7 @@
                         </table>
                         {{-- @foreach($worships as $worship)
                             <a href="{{ route('worships.show', $worship) }}" class="btn btn-primary btn-block">
-                                Jadwal Ibadah {{ $worship->nama }}
+                                Jadwal Ibadah {{ $worship->name }}
                             </a>
                         @endforeach --}}
                     </div>

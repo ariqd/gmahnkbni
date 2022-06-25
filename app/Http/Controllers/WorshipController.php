@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Worship;
+use App\Services\DateService;
+use Carbon\Carbon;
+use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
 
 class WorshipController extends Controller
@@ -49,17 +52,23 @@ class WorshipController extends Controller
     public function show(Worship $worship)
     {
         return view('worship.show', [
-            'ibadah' => $worship
+            'worship' => $worship
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Worship $worship)
+    public function edit(Request $request, Worship $worship)
     {
+        $dateService = new DateService();
+        $now = Carbon::now();
+
         return view('worship.form', [
-            'ibadah' => $worship
+            'worship' => $worship,
+            'saturdays' => $dateService->generateTable($request, $worship->day),
+            'quarter' => @$request->quarter ?? $now->quarter,
+            'year' => @$request->year ?? $now->year
         ]);
     }
 
