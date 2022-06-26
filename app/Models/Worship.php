@@ -19,4 +19,9 @@ class Worship extends Model
     {
         return $this->belongsTo(Role::class);
     }
+
+    public function skills()
+    {
+        return $this->belongsToMany(Skill::class)->using(Requirement::class);
+    }
 }

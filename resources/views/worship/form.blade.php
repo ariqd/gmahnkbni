@@ -13,10 +13,11 @@
                             <option value="4" @if ($quarter == 4) selected @endif>4</option>
                         </select>
 
-                        <label class="my-1 mr-2" for="quarter">Tahun </label>
-                        <select class="custom-select my-1 mr-sm-2" id="quarter" name="year">
+                        <label class="my-1 mr-2" for="year">Tahun </label>
+                        <select class="custom-select my-1 mr-sm-2" id="year" name="year">
                             @for ($i = 2022; $i < 2028; $i++)
-                                <option value="{{ $i }}" @if ($year == $i) selected @endif>{{ $i }}</option>
+                                <option value="{{ $i }}" @if ($year == $i) selected @endif>
+                                    {{ $i }}</option>
                             @endfor
                         </select>
 
@@ -41,28 +42,28 @@
                 <thead>
                     <tr>
                         <th>Tanggal</th>
-                        <th>Pianist</th>
-                        <th>MC</th>
-                        <th>Ayat Inti & Doa Buka</th>
-                        <th>Mission</th>
-                        <th>Lagu Pujian</th>
-                        <th>Diskusi Sekolah Sabat</th>
+                        @foreach ($worship->skills as $skill)
+                            <th>{{ $skill->name }}</th>
+                        @endforeach
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($saturdays as $month => $days)
                         <tr>
-                            <td class="text-center" colspan="7">{{ $month }}</td>
+                            <td class="text-center" colspan="{{ $worship->skills->count() + 1 }}">{{ $month }}</td>
                         </tr>
                         @foreach ($days as $day)
                             <tr>
                                 <td>{{ $day }}</td>
-                                <td>Annice</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                @foreach ($worship->skills as $skill)
+                                    <td>
+                                        <select name="" id="" class="form-control">
+                                            <option value=""></option>
+                                            <option value="Anette">Anette</option>
+                                            <option value="Ariq">Ariq</option>
+                                        </select>
+                                    </td>
+                                @endforeach
                             </tr>
                         @endforeach
                     @endforeach

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Worship;
 use App\Services\DateService;
 use Carbon\Carbon;
-use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
 
 class WorshipController extends Controller
