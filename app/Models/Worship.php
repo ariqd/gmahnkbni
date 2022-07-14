@@ -22,6 +22,6 @@ class Worship extends Model
 
     public function skills()
     {
-        return $this->belongsToMany(Skill::class)->using(Requirement::class);
+        return $this->belongsToMany(Skill::class, 'requirement')->using(Requirement::class)->withPivot('id');
     }
 }

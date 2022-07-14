@@ -13,7 +13,7 @@ class CreateRequirementsTable extends Migration
      */
     public function up()
     {
-        Schema::create('skill_worship', function (Blueprint $table) {
+        Schema::create('requirements', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('worship_id');
             $table->unsignedBigInteger('skill_id');
@@ -28,6 +28,6 @@ class CreateRequirementsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('skill_worship');
+        Schema::dropIfExists('requirements');
     }
 }

@@ -17,18 +17,45 @@
                 </div>
             </div>
             @auth
-                <div class="card card-body mt-3">
-                    <h4 class="text-center">Ubah Jadwal</h4>
-                    <div class="row mt-3">
-                        <div class="col-12">
-                            @foreach(auth()->user()->role->worship as $worship)
-                                <a href="{{ route('worships.edit', $worship) }}" class="btn btn-secondary btn-block">
-                                    Ubah Jadwal Ibadah {{ $worship->name }}
-                                </a>
-                            @endforeach
+                @if (auth()->user()->role->id < 3)
+                    <div class="card card-body mt-3">
+                        <h4 class="text-center">Ubah Jadwal</h4>
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                @foreach (auth()->user()->role->worship as $worship)
+                                    <a href="{{ route('worships.show', $worship) }}" class="btn btn-secondary btn-block">
+                                        Ubah Jadwal Ibadah {{ $worship->name }}
+                                    </a>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
-                </div>
+                @else
+                    <div class="card card-body mt-3">
+                        <div class="row">
+                            <div class="col-6">
+                                <h4 class="text-center mb-3">Master Data</h4>
+                                <a href="{{ route('servants.index') }}" class="btn btn-secondary btn-block">
+                                    Partisipan
+                                </a>
+                                <a href="{{ route('skills.index') }}" class="btn btn-secondary btn-block">
+                                    Skill
+                                </a>
+                                <a href="{{ route('criterias.index') }}" class="btn btn-secondary btn-block">
+                                    Kriteria
+                                </a>
+                            </div>
+                            <div class="col-6">
+                                <h4 class="text-center mb-3">Edit Ibadah</h4>
+                                @foreach ($worships as $worship)
+                                    <a href="{{ route('worships.edit', $worship) }}" class="btn btn-secondary btn-block">
+                                        {{ $worship->name }}
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                @endif
             @endauth
         </div>
     </div>

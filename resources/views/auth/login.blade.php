@@ -44,9 +44,6 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
                                 </button>
-{{--                                <a href="{{ url('/home') }}" class="btn btn-primary">--}}
-{{--                                    {{ __('Login') }}--}}
-{{--                                </a>--}}
                             </div>
                         </div>
                     </form>

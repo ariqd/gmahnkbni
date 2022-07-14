@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Servant;
 use App\Models\Worship;
 use App\Services\DateService;
 use Carbon\Carbon;
@@ -48,26 +49,27 @@ class WorshipController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Worship $worship)
+    public function show(Request $request, Worship $worship)
     {
+        $dateService = new DateService();
+        $now = Carbon::now();
+
         return view('worship.show', [
-            'worship' => $worship
+            'worship' => $worship,
+            'months' => $dateService->generateTable($request, $worship->day),
+            'quarter' => @$request->quarter ?? $now->quarter,
+            'year' => @$request->year ?? $now->year,
+            'servants' => Servant::all()
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Request $request, Worship $worship)
+    public function edit(Worship $worship)
     {
-        $dateService = new DateService();
-        $now = Carbon::now();
-
         return view('worship.form', [
-            'worship' => $worship,
-            'saturdays' => $dateService->generateTable($request, $worship->day),
-            'quarter' => @$request->quarter ?? $now->quarter,
-            'year' => @$request->year ?? $now->year
+            'worship' => $worship
         ]);
     }
 
