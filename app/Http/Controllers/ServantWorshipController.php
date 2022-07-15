@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ServantWorship;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class ServantWorshipController extends Controller
 {
@@ -69,8 +70,13 @@ class ServantWorshipController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request->all());
-        dd($id);
+        $input = $request->get('value');
+
+        $filteredArray = Arr::where($input, function ($value, $key) {
+            return !empty($value['servant_id']);
+        });
+
+        dd($filteredArray);
     }
 
     /**
