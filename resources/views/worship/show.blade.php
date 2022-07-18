@@ -1,4 +1,6 @@
-<x-app-layout>
+@extends('layouts.app')
+
+@section('content')
     <div class="card mt-3">
         <div class="card-body pb-0">
             <div class="row align-items-baseline">
@@ -57,6 +59,7 @@
                     <tbody>
                         @php
                             $i = 0;
+                            $skill_count = 1;
                         @endphp
                         @foreach ($months as $month => $days)
                             <tr>
@@ -75,8 +78,11 @@
                                                 value="{{ $day }}">
                                             <input type="hidden" name="value[{{ $i }}][skill_id]"
                                                 value="{{ $skill->id }}">
-                                            <select class="custom-select select2"
-                                                name="value[{{ $i }}][servant_id]">
+                                            <input type="hidden" name="value[{{ $i }}][skill_count]"
+                                                value="{{ $skill_count }}">
+                                            <select class="custom-select select2 select_servant"
+                                                name="value[{{ $i }}][servant_id]"
+                                                data-skill="{{ $skill->id }}" data-count="{{ $skill_count }}">
                                                 <option value="" selected disabled></option>
                                                 @foreach ($servants as $servant)
                                                     @if ($servant->skill_id == $skill->id)
@@ -90,7 +96,8 @@
                                                                 ->wherePivot('assign_date', $date)
                                                                 ->count();
                                                         @endphp
-                                                        <option value="{{ $servant->id }}" @if($isExist > 0) selected @endif>
+                                                        <option value="{{ $servant->id }}"
+                                                            @if ($isExist > 0) selected @endif>
                                                             {{ $servant->name }} (Memenuhi {{ $criteriasCount }}
                                                             dari
                                                             {{ $skill->pivot->criterias->count() }} kriteria)
@@ -98,11 +105,18 @@
                                                     @endif
                                                 @endforeach
                                             </select>
+                                            <small class="help form-text text-danger d-none"
+                                                data-skill="{{ $skill->id }}" data-count="{{ $skill_count }}">
+                                                Partisipan sama dengan minggu sebelumnya
+                                            </small>
                                         </td>
                                         @php
                                             $i++;
                                         @endphp
                                     @endforeach
+                                    @php
+                                        $skill_count++;
+                                    @endphp
                                 </tr>
                             @endforeach
                         @endforeach
@@ -118,4 +132,33 @@
             </div>
         </form>
     </div>
-</x-app-layout>
+@endsection
+
+@push('js')
+    <script>
+        $(document).ready(function() {
+            $(".select_servant").change(function() {
+                const skill_id = $(this).data('skill');
+                let count = $(this).data('count');
+                let countPlus = count + 1;
+                let countMinus = count - 1;
+                const value = $(this).val();
+
+                let next = $('.select_servant[data-skill="' + skill_id + '"][data-count="' + countPlus + '"]');
+                let prev = $('.select_servant[data-skill="' + skill_id + '"][data-count="' + countMinus + '"]');
+
+                if (value === prev.val()) {
+                    $('.help[data-skill="' + skill_id + '"][data-count="' + count + '"]').removeClass('d-none');
+                } else {
+                    $('.help[data-skill="' + skill_id + '"][data-count="' + count + '"]').addClass('d-none');
+                }
+
+                if (value === next.val()) {
+                    $('.help[data-skill="' + skill_id + '"][data-count="' + countPlus + '"]').removeClass('d-none');
+                } else {
+                    $('.help[data-skill="' + skill_id + '"][data-count="' + countPlus + '"]').addClass('d-none');
+                }
+            });
+        });
+    </script>
+@endpush
