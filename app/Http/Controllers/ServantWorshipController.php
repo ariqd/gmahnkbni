@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ServantWorship;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
@@ -76,7 +77,15 @@ class ServantWorshipController extends Controller
             return !empty($value['servant_id']);
         });
 
-        dd($filteredArray);
+        foreach($filteredArray as $input) {
+            $date = Carbon::parse($input['month'] . ' ' . $input['day'] . ', ' . date('Y'));
+            ServantWorship::updateOrCreate(
+                ['worship_id' => $id, 'assign_date' => $date],
+                ['servant_id' => $input['servant_id']]
+            );
+        }
+
+        return redirect()->back()->with('success', 'Data jadwal berhasil diubah.');
     }
 
     /**

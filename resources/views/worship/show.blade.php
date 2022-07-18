@@ -69,18 +69,28 @@
                                     <td>{{ $day }}</td>
                                     @foreach ($worship->skills as $skill)
                                         <td>
-                                            <input type="hidden" name="value[{{ $i }}][month]" value="{{ $month }}">
-                                            <input type="hidden" name="value[{{ $i }}][day]" value="{{ $day }}">
-                                            <input type="hidden" name="value[{{ $i }}][skill_id]" value="{{ $skill->id }}">
-                                            <select class="custom-select select2" name="value[{{ $i }}][servant_id]">
+                                            <input type="hidden" name="value[{{ $i }}][month]"
+                                                value="{{ $month }}">
+                                            <input type="hidden" name="value[{{ $i }}][day]"
+                                                value="{{ $day }}">
+                                            <input type="hidden" name="value[{{ $i }}][skill_id]"
+                                                value="{{ $skill->id }}">
+                                            <select class="custom-select select2"
+                                                name="value[{{ $i }}][servant_id]">
                                                 <option value="" selected disabled></option>
                                                 @foreach ($servants as $servant)
                                                     @if ($servant->skill_id == $skill->id)
                                                         @php
                                                             $servantCriterias = $servant->criterias->pluck('id')->toArray();
                                                             $criteriasCount = $skill->pivot->criterias->whereIn('id', $servantCriterias)->count();
+                                                            $date = Carbon\Carbon::parse($month . ' ' . $day . ', ' . date('Y'));
+                                                            $isExist = $servant
+                                                                ->worships()
+                                                                ->wherePivot('worship_id', $worship->id)
+                                                                ->wherePivot('assign_date', $date)
+                                                                ->count();
                                                         @endphp
-                                                        <option value="{{ $servant->id }}">
+                                                        <option value="{{ $servant->id }}" @if($isExist > 0) selected @endif>
                                                             {{ $servant->name }} (Memenuhi {{ $criteriasCount }}
                                                             dari
                                                             {{ $skill->pivot->criterias->count() }} kriteria)

@@ -23,4 +23,9 @@ class Servant extends Model
     {
         return $this->belongsToMany(Criteria::class, 'servant_criterias', 'servant_id', 'criteria_id')->using(ServantCriteria::class)->withPivot('id');
     }
+
+    public function worships()
+    {
+        return $this->belongsToMany(Worship::class, 'servant_worships')->using(ServantWorship::class)->withPivot('id');
+    }
 }

@@ -24,4 +24,9 @@ class Worship extends Model
     {
         return $this->belongsToMany(Skill::class, 'requirement')->using(Requirement::class)->withPivot('id');
     }
+
+    public function servants()
+    {
+        return $this->belongsToMany(Servant::class, 'servant_worships')->using(ServantWorship::class)->withPivot('id');
+    }
 }
