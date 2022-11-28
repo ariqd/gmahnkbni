@@ -16,6 +16,7 @@ class ServantWorship extends Pivot
     protected $fillable = [
         'servant_id',
         'worship_id',
+        'skill_id',
         'assign_date',
     ];
 }

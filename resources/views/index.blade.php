@@ -10,7 +10,7 @@
                         </a>
                     </div>
                     <div class="col-6">
-                        <a href="#" class="btn btn-primary btn-block">
+                        <a href="{{ route('schedule.index') }}" class="btn btn-primary btn-block">
                             Jadwal Partisipan
                         </a>
                     </div>

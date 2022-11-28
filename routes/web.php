@@ -14,11 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
+Route::resource('schedule', App\Http\Controllers\ScheduleController::class)->only('index', 'show');
+Route::resource('worships', App\Http\Controllers\WorshipController::class)->only('index');
 
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::resource('worships', App\Http\Controllers\WorshipController::class);
+    Route::resource('worships', App\Http\Controllers\WorshipController::class)->only('show', 'edit');
     Route::put('worships/{id}/servant', [App\Http\Controllers\ServantWorshipController::class, 'update'])->name('servant-worship.update');
     Route::resource('skills', App\Http\Controllers\SkillController::class);
     Route::resource('criterias', App\Http\Controllers\CriteriaController::class);

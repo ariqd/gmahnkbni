@@ -80,7 +80,7 @@ class ServantWorshipController extends Controller
         foreach($filteredArray as $input) {
             $date = Carbon::parse($input['month'] . ' ' . $input['day'] . ', ' . date('Y'));
             ServantWorship::updateOrCreate(
-                ['worship_id' => $id, 'assign_date' => $date],
+                ['worship_id' => $id, 'skill_id' => $input['skill_id'], 'assign_date' => $date],
                 ['servant_id' => $input['servant_id']]
             );
         }

@@ -93,6 +93,7 @@
                                                             $isExist = $servant
                                                                 ->worships()
                                                                 ->wherePivot('worship_id', $worship->id)
+                                                                ->wherePivot('skill_id', $skill->id)
                                                                 ->wherePivot('assign_date', $date)
                                                                 ->count();
                                                         @endphp
